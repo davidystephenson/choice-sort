@@ -1,6 +1,6 @@
 {
   "name": "choice-sort",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Sort by choice",
   "keywords": [
     "choice",
@@ -21,6 +21,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "build": "tsup",
     "check": "npx tsc && npm run test && npm run deadcode && npm run lint",
     "check:notify": "npm run check ; npm run notify",
     "deadcode": "npx knip --reporter ./my-reporter.js",
@@ -41,7 +42,8 @@
     "knip": "^5.45.0",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
-    "ts-standard": "^12.0.2"
+    "ts-standard": "^12.0.2",
+    "tsup": "^8.4.0"
   },
   "ts-standard": {
     "project": "./tsconfig.json"
