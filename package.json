@@ -1,0 +1,61 @@
+{
+  "name": "choice-sort",
+  "version": "0.0.1",
+  "description": "Sort by choice",
+  "keywords": [
+    "choice",
+    "sort",
+    "choices",
+    "sorting"
+  ],
+  "homepage": "https://github.com/davidystephenson/choice-sort#readme",
+  "bugs": {
+    "url": "https://github.com/davidystephenson/choice-sort/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidystephenson/choice-sort.git"
+  },
+  "license": "Unlicense",
+  "author": "David Y. Stephenson",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "check": "npx tsc && npm run test && npm run deadcode && npm run lint",
+    "check:notify": "npm run check ; npm run notify",
+    "deadcode": "npx knip --reporter ./my-reporter.js",
+    "lint": "npx ts-standard --fix",
+    "notify": "pw-play --playback /usr/share/sounds/freedesktop/stereo/message.oga",
+    "test": "npx jest --json > jest-results.json && node parse-jest-failures.js",
+    "test:watch": "jest --watch",
+    "test:notify": "npm run test ; npm run notify"
+  },
+  "dependencies": {
+    "rand-seed": "^2.1.7",
+    "typescript": "^5.8.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "jest": "^29.7.0",
+    "knip": "^5.45.0",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
+    "ts-standard": "^12.0.2"
+  },
+  "ts-standard": {
+    "project": "./tsconfig.json"
+  },
+  "knip": {
+    "ignore": [
+      "my-reporter.js",
+      "behavior/**"
+    ],
+    "ignoreBinaries": [
+      "pw-play"
+    ],
+    "ignoreDependencies": [
+      "ts-node"
+    ]
+  }
+}
