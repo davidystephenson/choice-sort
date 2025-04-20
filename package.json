@@ -46,7 +46,10 @@
     "tsup": "^8.4.0"
   },
   "ts-standard": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "ignore": [
+      "dist/**"
+    ]
   },
   "knip": {
     "ignore": [

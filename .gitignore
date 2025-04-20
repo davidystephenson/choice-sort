@@ -1,4 +1,6 @@
 /node_modules/
-# Jest
 coverage/
 jest-results.json
+
+# Tsup
+dist/
