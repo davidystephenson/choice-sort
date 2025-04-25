@@ -9,9 +9,9 @@ export default function combineOperations (props: {
   const operations = Object.values(props.flow.operations)
   const outputOperations = operations.filter(operation => isOutputOperation({ operation }))
 
-  if (outputOperations.length > 2) {
-    throw new Error('Flow has more than two output operations')
-  }
+  // if (outputOperations.length > 2) {
+  //   throw new Error('Flow has more than two output operations')
+  // }
 
   if (outputOperations.length !== 2) {
     return props.flow
@@ -21,28 +21,11 @@ export default function combineOperations (props: {
   const firstLength = first.output.length
   const secondLength = second.output.length
 
-  let catalogOperation
-  let queueOperation
+  const catalogOperation = firstLength === secondLength
+    ? first.uid < second.uid ? first : second
+    : firstLength > secondLength ? first : second
 
-  if (firstLength === secondLength) {
-    // If same length, earlier UID goes to catalog
-    if (first.uid < second.uid) {
-      catalogOperation = first
-      queueOperation = second
-    } else {
-      catalogOperation = second
-      queueOperation = first
-    }
-  } else {
-    // If different length, longer goes to catalog
-    if (firstLength > secondLength) {
-      catalogOperation = first
-      queueOperation = second
-    } else {
-      catalogOperation = second
-      queueOperation = first
-    }
-  }
+  const queueOperation = catalogOperation === first ? second : first
 
   const newOperation = createOperation({
     flow: props.flow,

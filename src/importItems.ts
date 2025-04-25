@@ -46,7 +46,7 @@ export default function importItems (props: {
     })
   }
 
-  const items = Object.values(baseFlow.items)
+  const items = Object.values(props.items)
   const pairCount = Math.floor(items.length / 2)
   const pairs = Array.from({ length: pairCount }, (_, i) => {
     const firstIndex = i * 2
@@ -55,6 +55,7 @@ export default function importItems (props: {
     const secondItem = items[secondIndex]
     return [firstItem, secondItem]
   })
+  // [[{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }]]
 
   const flowWithPairs = pairs.reduce((currentFlow, pair) => {
     const operation = createOperation({

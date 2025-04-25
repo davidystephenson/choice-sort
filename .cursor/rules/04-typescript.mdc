@@ -1,6 +1,7 @@
 ---
 description: Use TypeScript for everything
 globs: **/*
+alwaysApply: false
 ---
 
 - Use TypeScript for all code

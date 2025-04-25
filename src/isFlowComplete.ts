@@ -25,9 +25,9 @@ export default function isFlowComplete (props: {
 
   const outputOperations = operations.filter(operation => isOutputOperation({ operation }))
 
-  if (outputOperations.length > 1) {
-    throw new Error('Flow has multiple output operations')
-  }
+  // if (outputOperations.length > 1) {
+  //   throw new Error('Flow has multiple output operations')
+  // }
 
   if (operations.length > 1) {
     return false
