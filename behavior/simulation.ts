@@ -83,6 +83,7 @@ function mean (x: number[]): number {
   if (x.length === 0) return 0
   return sum(x) / x.length
 }
+const CONTROL = false
 function getSteps (itemCount: number): number {
   const labels = shuffle(range(itemCount).map(i => String(i)))
   const items = labels.map(s => ({
@@ -97,15 +98,12 @@ function getSteps (itemCount: number): number {
   let steps = 0
   while (choice != null) {
     flow = operate({ flow, option: decide(choice) })
-    flow = combineOperations({ flow })
-    // void combinedTwoFlow
-    // const cloned = structuredClone(operatedFlow)
-    // const combinedMoreFlow = combineMoreOperations(cloned)
-    // flow = combinedMoreFlow
-    // if (allComplete(flow)) {
-    //   const combined = combineMoreOperations(flow)
-    //   flow = combined
-    // }
+    if (CONTROL) {
+      flow = combineOperations({ flow })
+    } else if (allComplete(flow)) {
+      const combined = combineMoreOperations(flow)
+      flow = combined
+    }
     choice = getChoice({ flow })
     steps += 1
   }
@@ -116,16 +114,18 @@ function getMeanSteps (samples: number, itemCount: number): number {
   return mean(stepArray)
 }
 
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
+const SIZE = 40
 
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
 
 // originalMeanSteps = 68.2

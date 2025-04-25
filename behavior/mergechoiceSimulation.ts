@@ -1,5 +1,5 @@
-import { Choice, importItems, createFlow, getChoice } from '../src/index'
 import combineOperations from '../src/combineOperations'
+import { Choice, importItems, createFlow, getChoice } from '../src/index'
 import operate from '../src/operate'
 
 function decide (choice: Choice): string {
@@ -16,6 +16,7 @@ function shuffle (strings: string[]): string[] {
 function range (length: number): number[] {
   return [...Array(length).keys()]
 }
+
 function sum (x: number[]): number {
   let total = 0
   x.forEach(i => { total += i })
@@ -27,10 +28,12 @@ function mean (x: number[]): number {
 }
 function getSteps (itemCount: number): number {
   const labels = shuffle(range(itemCount).map(i => String(i)))
-  const items = labels.map(s => ({
-    label: s,
-    uid: s
-  }))
+  const items = labels.map(s => {
+    return {
+      label: s,
+      uid: s
+    }
+  })
   let flow = importItems({
     flow: createFlow({ uid: '0' }),
     items
@@ -38,8 +41,7 @@ function getSteps (itemCount: number): number {
   let choice = getChoice({ flow })
   let steps = 0
   while (choice != null) {
-    const option = decide(choice)
-    flow = operate({ flow, option })
+    flow = operate({ flow, option: decide(choice) })
     flow = combineOperations({ flow })
     choice = getChoice({ flow })
     steps += 1
@@ -51,16 +53,18 @@ function getMeanSteps (samples: number, itemCount: number): number {
   return mean(stepArray)
 }
 
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
-console.log('steps', getSteps(20))
+const SIZE = 40
 
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
-console.log('meanSteps', getMeanSteps(1000, 20))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+console.log('steps', getSteps(SIZE))
+
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.log('meanSteps', getMeanSteps(1000, SIZE))
 
 // originalMeanSteps = 68.2
