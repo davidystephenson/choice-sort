@@ -182,6 +182,25 @@ describe('importItems', () => {
     expect(uniqueOperationIds.size).toBe(operationIds.length)
   })
 
+  it('should create the same operations items with different flow UIDs', () => {
+    const flow = createFlow({ uid: 'matrix1' })
+    const item1 = { label: 'original', uid: '1', seed: 90 }
+    const item2 = { label: 'resurrections', uid: '2', seed: 30 }
+    const item3 = { label: 'revolutions', uid: '3', seed: 40 }
+    const items = [item1, item2, item3]
+    const importedFlow = importItems({ flow, items })
+    const operations = Object.values(importedFlow.operations)
+    const duplicateFlow = createFlow({ uid: 'matrix2' })
+    const duplicateImportedFlow = importItems({ flow: duplicateFlow, items })
+    const duplicates = Object.values(duplicateImportedFlow.operations)
+    operations.forEach((operation, index) => {
+      const duplicate = duplicates[index]
+      expect(duplicate.catalog).toEqual(operation.catalog)
+      expect(duplicate.output).toEqual(operation.output)
+      expect(duplicate.queue).toEqual(operation.queue)
+    })
+  })
+
   it('should include each item only once in the operations', () => {
     const flow = createFlow({ uid: 'test' })
     const item1 = { label: 'The Matrix', uid: '1', seed: 90 }

@@ -1,11 +1,16 @@
-import combineOperations from '../src/combineOperations'
-import { Choice, importItems, createFlow, getChoice } from '../src/index'
-import operate from '../src/operate'
+import createState from '../src/mergechoice/createState'
+import importItems from '../src/mergechoice/importItems'
+import { Item, State } from '../src/mergechoice/mergeChoiceTypes'
+import chooseOption from '../src/mergechoice/chooseOption'
+import debugOperations from '../src/mergechoice/debugOperations'
 
-function decide (choice: Choice): string {
-  const options = [choice.catalog, choice.queue]
-  const numbers = options.map(s => Number(s))
-  return numbers[0] > numbers[1] ? options[0] : options[1]
+function decide (state: State<Item>): number {
+  if (state.choice == null) {
+    throw new Error('No choice')
+  }
+  const numbers = state.choice.options.map(s => Number(s))
+  const index = numbers[0] > numbers[1] ? 0 : 1
+  return index
 }
 function shuffle (strings: string[]): string[] {
   return strings
@@ -26,45 +31,58 @@ function mean (x: number[]): number {
   if (x.length === 0) return 0
   return sum(x) / x.length
 }
-function getSteps (itemCount: number): number {
+function getSteps (itemCount: number, debug: boolean = false): number {
   const labels = shuffle(range(itemCount).map(i => String(i)))
   const items = labels.map(s => {
-    return {
-      label: s,
-      uid: s
+    const item: Item = {
+      id: s,
+      seeding: false,
+      name: s
     }
+    return item
   })
-  let flow = importItems({
-    flow: createFlow({ uid: '0' }),
+  let state = createState({ seed: '0' })
+  state = importItems({
+    state,
     items
   })
-  let choice = getChoice({ flow })
+  if (debug) {
+    debugOperations({ label: 'imported', items: state.items, operations: state.activeOperations })
+  }
   let steps = 0
-  while (choice != null) {
-    flow = operate({ flow, option: decide(choice) })
-    flow = combineOperations({ flow })
-    choice = getChoice({ flow })
+  while (!state.complete) {
+    const option = decide(state)
+    state = chooseOption({ state, betterIndex: option })
     steps += 1
+  }
+  if (debug) {
+    debugOperations({ label: 'complete', items: state.items, operations: state.activeOperations })
   }
   return steps
 }
 function getMeanSteps (samples: number, itemCount: number): number {
-  const stepArray = range(samples).map(s => getSteps(itemCount))
+  const stepArray = range(samples).map((s, index) => {
+    const steps = getSteps(itemCount)
+    if (index % 100 === 0) {
+      console.info(index, 'steps', steps)
+    }
+    return steps
+  })
   return mean(stepArray)
 }
 
 const SIZE = 40
 
-console.log('steps', getSteps(SIZE))
-console.log('steps', getSteps(SIZE))
-console.log('steps', getSteps(SIZE))
-console.log('steps', getSteps(SIZE))
-console.log('steps', getSteps(SIZE))
+console.info('steps', getSteps(SIZE))
+console.info('steps', getSteps(SIZE))
+console.info('steps', getSteps(SIZE))
+console.info('steps', getSteps(SIZE))
+console.info('steps', getSteps(SIZE))
 
-console.log('meanSteps', getMeanSteps(1000, SIZE))
-console.log('meanSteps', getMeanSteps(1000, SIZE))
-console.log('meanSteps', getMeanSteps(1000, SIZE))
-console.log('meanSteps', getMeanSteps(1000, SIZE))
-console.log('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
 
 // originalMeanSteps = 68.2

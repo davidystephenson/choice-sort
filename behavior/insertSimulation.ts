@@ -95,7 +95,28 @@ function getSteps (itemCount: number): number {
     items
   })
   let choice = getChoice({ flow })
+  while (choice != null) {
+    flow = operate({ flow, option: decide(choice) })
+    if (CONTROL) {
+      flow = combineOperations({ flow })
+    } else if (allComplete(flow)) {
+      const combined = combineMoreOperations(flow)
+      flow = combined
+    }
+    choice = getChoice({ flow })
+  }
+  const random = Math.random()
+  const scaled = random * itemCount
+  const item = {
+    label: String(scaled),
+    uid: String(scaled)
+  }
+  console.log('item', item)
+  flow = importItems({ flow, items: [item] })
+  console.log('flow.operations', flow.operations)
   let steps = 0
+  choice = getChoice({ flow })
+  console.log('choice', choice)
   while (choice != null) {
     flow = operate({ flow, option: decide(choice) })
     if (CONTROL) {
@@ -127,5 +148,3 @@ console.info('meanSteps', getMeanSteps(1000, SIZE))
 console.info('meanSteps', getMeanSteps(1000, SIZE))
 console.info('meanSteps', getMeanSteps(1000, SIZE))
 console.info('meanSteps', getMeanSteps(1000, SIZE))
-
-// originalMeanSteps = 68.2

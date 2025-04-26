@@ -12,8 +12,8 @@ export default function labelOperation <ListItem extends Item> (props: {
   const outputNames = clone.output.map(itemId => labelItem({ itemId, items: props.items }))
   return {
     input: [input1Names, input2Names],
-    mergeChoiceId: clone.mergeChoiceId,
-    output: outputNames,
-    priority: clone.priority
+    // mergeChoiceId: clone.mergeChoiceId,
+    output: outputNames
+    // priority: clone.priority
   }
 }

@@ -7,7 +7,7 @@ export default function getRandom (props: {
   const rand = new Rand(props.seed)
   const random = rand.next()
   if (props.debug === true) {
-    console.log('random', random)
+    console.debug('random', random)
   }
   return random
 }
