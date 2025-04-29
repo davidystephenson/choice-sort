@@ -83,8 +83,8 @@ function mean (x: number[]): number {
   if (x.length === 0) return 0
   return sum(x) / x.length
 }
-const MULTIPLE = false
-function getSteps (itemCount: number, debug: boolean = false): number {
+const MULTIPLE = true
+function getSteps (itemCount: number): number {
   const labels = shuffle(range(itemCount).map(i => String(i)))
   const items = labels.map(s => ({
     label: s,
@@ -95,34 +95,7 @@ function getSteps (itemCount: number, debug: boolean = false): number {
     items
   })
   let choice = getChoice({ flow })
-  while (choice != null) {
-    flow = operate({ flow, option: decide(choice) })
-    if (MULTIPLE) {
-      flow = combineOperations({ flow })
-    } else if (allComplete(flow)) {
-      const combined = combineMoreOperations(flow)
-      flow = combined
-    }
-    choice = getChoice({ flow })
-  }
-  const random = Math.random()
-  const scaled = random * itemCount
-  const item = {
-    label: String(scaled),
-    uid: String(scaled)
-  }
-  if (debug) {
-    console.log('item', item)
-  }
-  flow = importItems({ flow, items: [item] })
-  if (debug) {
-    console.log('flow.operations', flow.operations)
-  }
   let steps = 0
-  choice = getChoice({ flow })
-  if (debug) {
-    console.log('choice', choice)
-  }
   while (choice != null) {
     flow = operate({ flow, option: decide(choice) })
     if (MULTIPLE) {
@@ -150,7 +123,9 @@ console.info('steps', getSteps(SIZE))
 console.info('steps', getSteps(SIZE))
 
 console.info('meanSteps', getMeanSteps(1000, SIZE))
-// console.info('meanSteps', getMeanSteps(1000, SIZE))
-// console.info('meanSteps', getMeanSteps(1000, SIZE))
-// console.info('meanSteps', getMeanSteps(1000, SIZE))
-// console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+console.info('meanSteps', getMeanSteps(1000, SIZE))
+
+// originalMeanSteps = 68.2

@@ -83,7 +83,7 @@ function mean (x: number[]): number {
   if (x.length === 0) return 0
   return sum(x) / x.length
 }
-const CONTROL = false
+const DOUBLE = true
 function getSteps (itemCount: number): number {
   const labels = shuffle(range(itemCount).map(i => String(i)))
   const items = labels.map(s => ({
@@ -98,7 +98,7 @@ function getSteps (itemCount: number): number {
   let steps = 0
   while (choice != null) {
     flow = operate({ flow, option: decide(choice) })
-    if (CONTROL) {
+    if (DOUBLE) {
       flow = combineOperations({ flow })
     } else if (allComplete(flow)) {
       const combined = combineMoreOperations(flow)
@@ -123,9 +123,9 @@ console.info('steps', getSteps(SIZE))
 console.info('steps', getSteps(SIZE))
 
 console.info('meanSteps', getMeanSteps(1000, SIZE))
-console.info('meanSteps', getMeanSteps(1000, SIZE))
-console.info('meanSteps', getMeanSteps(1000, SIZE))
-console.info('meanSteps', getMeanSteps(1000, SIZE))
-console.info('meanSteps', getMeanSteps(1000, SIZE))
+// console.info('meanSteps', getMeanSteps(1000, SIZE))
+// console.info('meanSteps', getMeanSteps(1000, SIZE))
+// console.info('meanSteps', getMeanSteps(1000, SIZE))
+// console.info('meanSteps', getMeanSteps(1000, SIZE))
 
 // originalMeanSteps = 68.2

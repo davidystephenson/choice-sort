@@ -49,6 +49,18 @@ function getSteps (itemCount: number, debug: boolean = false): number {
   if (debug) {
     debugOperations({ label: 'imported', items: state.items, operations: state.activeOperations })
   }
+  while (!state.complete) {
+    const option = decide(state)
+    state = chooseOption({ state, betterIndex: option })
+  }
+  const random = Math.random()
+  const scaled = random * itemCount
+  const item: Item = {
+    id: String(scaled),
+    seeding: false,
+    name: String(scaled)
+  }
+  state = importItems({ state, items: [item] })
   let steps = 0
   while (!state.complete) {
     const option = decide(state)
@@ -79,10 +91,11 @@ console.info('steps', getSteps(SIZE))
 console.info('steps', getSteps(SIZE))
 console.info('steps', getSteps(SIZE))
 
-console.info('meanSteps', getMeanSteps(100, SIZE, 10))
-// console.info('meanSteps', getMeanSteps(100, SIZE))
-// console.info('meanSteps', getMeanSteps(100, SIZE))
-// console.info('meanSteps', getMeanSteps(100, SIZE))
-// console.info('meanSteps', getMeanSteps(100, SIZE))
+const SAMPLES = 100
+console.info('meanSteps', getMeanSteps(SAMPLES, SIZE))
+// console.info('meanSteps', getMeanSteps(SAMPLES, SIZE))
+// console.info('meanSteps', getMeanSteps(SAMPLES, SIZE))
+// console.info('meanSteps', getMeanSteps(SAMPLES, SIZE))
+// console.info('meanSteps', getMeanSteps(SAMPLES, SIZE))
 
 // originalMeanSteps = 68.2
