@@ -6,24 +6,22 @@ export default function importItems (props: {
   flow: Flow
   items: Item[]
 }): Flow {
-  if (props.items.length === 0) {
-    throw new Error('Items cannot be empty')
-  }
-
   const uids = props.items.map(item => item.uid)
   const uniqueUids = new Set(uids)
   if (uniqueUids.size !== props.items.length) {
     throw new Error('Item UIDs must be unique')
   }
 
-  for (const item of props.items) {
-    if (props.flow.items[item.uid] != null) {
-      throw new Error('Item UIDs must be unique across the entire flow')
-    }
+  const newItems = props.items.filter(item => {
+    return props.flow.items[item.uid] == null
+  })
+
+  if (newItems.length === 0) {
+    return props.flow
   }
 
   const itemsRecord: Record<string, Item> = { ...props.flow.items }
-  for (const item of props.items) {
+  for (const item of newItems) {
     itemsRecord[item.uid] = item
   }
 
@@ -32,12 +30,12 @@ export default function importItems (props: {
     items: itemsRecord
   }
 
-  if (props.items.length === 1) {
+  if (newItems.length === 1) {
     const operation = createOperation({
       queue: [],
       catalog: [],
       flow: baseFlow,
-      output: [props.items[0].uid]
+      output: [newItems[0].uid]
     })
 
     return addOperation({
@@ -46,16 +44,14 @@ export default function importItems (props: {
     })
   }
 
-  const items = Object.values(props.items)
-  const pairCount = Math.floor(items.length / 2)
+  const pairCount = Math.floor(newItems.length / 2)
   const pairs = Array.from({ length: pairCount }, (_, i) => {
     const firstIndex = i * 2
     const secondIndex = i * 2 + 1
-    const firstItem = items[firstIndex]
-    const secondItem = items[secondIndex]
+    const firstItem = newItems[firstIndex]
+    const secondItem = newItems[secondIndex]
     return [firstItem, secondItem]
   })
-  // [[{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }], [{ }, { }]]
 
   const flowWithPairs = pairs.reduce((currentFlow, pair) => {
     const operation = createOperation({
@@ -71,14 +67,14 @@ export default function importItems (props: {
     })
   }, baseFlow)
 
-  const hasRemainingItem = items.length % 2 === 1
+  const hasRemainingItem = newItems.length % 2 === 1
 
   if (!hasRemainingItem) {
     return flowWithPairs
   }
 
-  const lastIndex = items.length - 1
-  const remainingItem = items[lastIndex]
+  const lastIndex = newItems.length - 1
+  const remainingItem = newItems[lastIndex]
 
   const operation = createOperation({
     queue: [],
