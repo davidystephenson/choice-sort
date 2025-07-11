@@ -22,7 +22,7 @@ const choice = getChoice({ flow })
 let chosen = chooseOption({ flow, option: choice.catalog })
 let complete = isFlowComplete({ flow })
 while (!complete) {
-  chosen = chooseOption({ flow, option: chosen })
+  chosen = chooseOption({ flow, option: choice.catalog })
   complete = isFlowComplete({ flow })
 }
 const ranking = getRanking({ flow })

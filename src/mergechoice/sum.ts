@@ -1,3 +1,0 @@
-export default function sum ({ numbers }: { numbers: number[] }): number {
-  return numbers.reduce((a, b) => a + b, 0)
-}
