@@ -9,9 +9,9 @@ export default function combineOperations (props: {
   const operations = Object.values(props.flow.operations)
   const outputOperations = operations.filter(operation => isOutputOperation({ operation }))
 
-  // if (outputOperations.length > 2) {
-  //   throw new Error('Flow has more than two output operations')
-  // }
+  if (outputOperations.length > 2) {
+    throw new Error('Flow has more than two output operations')
+  }
 
   if (outputOperations.length !== 2) {
     return props.flow

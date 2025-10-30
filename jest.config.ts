@@ -16,7 +16,6 @@ const config: Config = {
     '!src/**/*.d.ts'
   ],
   bail: true
-
 }
 
 export default config
