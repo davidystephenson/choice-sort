@@ -1,4 +1,4 @@
-import { Flow, Item } from './flowTypes'
+import { Flow, Item } from './types'
 import combineOperations from './combineOperations'
 import populate from './populate'
 

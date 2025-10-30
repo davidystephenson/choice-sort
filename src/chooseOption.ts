@@ -1,4 +1,4 @@
-import { Flow } from './flowTypes'
+import { Flow } from './types'
 import operate from './operate'
 import combineOperations from './combineOperations'
 

@@ -1,4 +1,4 @@
-import { Choice, Item } from './flowTypes'
+import { Choice, Item } from './types'
 
 export default function debugChoice (props: {
   choice?: Choice

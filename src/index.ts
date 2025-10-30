@@ -19,4 +19,4 @@ export {
   operationSchema,
   OperationDef,
   operationDefSchema
-} from './flowTypes'
+} from './types'

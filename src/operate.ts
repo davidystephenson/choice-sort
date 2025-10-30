@@ -1,4 +1,4 @@
-import { Flow } from './flowTypes'
+import { Flow } from './types'
 import getChoice from './getChoice'
 import getOptionIndex from './getOptionIndex'
 import getFloorHalf from './getFloorHalf'

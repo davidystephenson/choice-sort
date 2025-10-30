@@ -1,5 +1,5 @@
 import createUid from './createUid'
-import { Flow, Operation, OperationDef } from './flowTypes'
+import { Flow, Operation, OperationDef } from './types'
 
 export default function createOperation (props: {
   flow: Flow

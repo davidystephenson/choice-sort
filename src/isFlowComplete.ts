@@ -1,4 +1,4 @@
-import { Flow } from './flowTypes'
+import { Flow } from './types'
 import isOutputOperation from './isOutputOperation'
 
 export default function isFlowComplete (props: {

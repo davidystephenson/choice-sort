@@ -1,4 +1,4 @@
-import { Flow, Operation } from './flowTypes'
+import { Flow, Operation } from './types'
 
 export default function addOperation (props: {
   flow: Flow

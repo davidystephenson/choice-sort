@@ -1,4 +1,4 @@
-import { Flow } from './flowTypes'
+import { Flow } from './types'
 
 export default function createFlow (props: { uid: string }): Flow {
   if (props.uid == null) {

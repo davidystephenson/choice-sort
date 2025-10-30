@@ -1,4 +1,4 @@
-const operation1 = {
+export const operation1 = {
   aInput: [],
   better: undefined,
   bInput: [],
@@ -7,14 +7,14 @@ const operation1 = {
 
 // remove reloaded
 
-const operation2 = {
+export const operation2 = {
   aInput: [],
   better: undefined,
   bInput: [],
   output: ['original']
 }
 
-const operation3 = {
+export const operation3 = {
   aInput: [],
   better: undefined,
   bInput: [],
@@ -23,7 +23,7 @@ const operation3 = {
 
 // merge
 
-const operation4 = {
+export const operation4 = {
   aInput: ['original'],
   better: undefined,
   bInput: ['revolutions'],

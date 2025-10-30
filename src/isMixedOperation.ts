@@ -1,4 +1,4 @@
-import { Operation } from './flowTypes'
+import { Operation } from './types'
 
 export default function isMixedOperation (props: {
   operation: Operation

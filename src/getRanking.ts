@@ -1,4 +1,4 @@
-import { Flow, RankingItem } from './flowTypes'
+import { Flow, RankingItem } from './types'
 
 export default function getRanking (props: {
   flow: Flow

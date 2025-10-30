@@ -1,4 +1,4 @@
-import { Choice, Flow } from './flowTypes'
+import { Choice, Flow } from './types'
 import isFlowComplete from './isFlowComplete'
 import getChoiceOperation from './getChoiceOperation'
 import getOptionIndex from './getOptionIndex'

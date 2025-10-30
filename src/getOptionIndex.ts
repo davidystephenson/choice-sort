@@ -1,4 +1,4 @@
-import { Operation } from './flowTypes'
+import { Operation } from './types'
 import getFloorHalf from './getFloorHalf'
 import getInitialOptionIndex from './getInitialOptionIndex'
 
