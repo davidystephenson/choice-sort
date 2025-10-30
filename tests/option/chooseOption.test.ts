@@ -1,7 +1,7 @@
 import { chooseOption, createFlow } from '../../src'
-import combineOperations from '../../src/combineOperations'
 import getVerifiedChoice from '../choice/getVerifiedChoice'
-import operate from '../../src/operate'
+import * as operate from '../../src/operate'
+import * as combineOperations from '../../src/combineOperations'
 
 describe('chooseOption', () => {
   it('should operate', () => {
@@ -21,9 +21,11 @@ describe('chooseOption', () => {
       }
     }
     const choice = getVerifiedChoice({ flow })
-    const operatedFlow = operate({ flow, option: choice.queue })
+    const operatedFlow = operate.default({ flow, option: choice.queue })
+    const operateSpy = jest.spyOn(operate, 'default')
     const chosenFlow = chooseOption({ flow, option: choice.queue })
     expect(chosenFlow).toEqual(operatedFlow)
+    expect(operateSpy).toHaveBeenCalledWith({ flow, option: choice.queue })
   })
 
   it('should combine chosen operations', () => {
@@ -50,9 +52,11 @@ describe('chooseOption', () => {
       }
     }
     const choice = getVerifiedChoice({ flow })
-    const operationChosenFlow = operate({ flow, option: choice.queue })
-    const combinedFlow = combineOperations({ flow: operationChosenFlow })
+    const operationChosenFlow = operate.default({ flow, option: choice.queue })
+    const combinedFlow = combineOperations.default({ flow: operationChosenFlow })
+    const combineSpy = jest.spyOn(combineOperations, 'default')
     const chosenFlow = chooseOption({ flow, option: choice.queue })
     expect(chosenFlow).toEqual(combinedFlow)
+    expect(combineSpy).toHaveBeenCalledWith({ flow: operationChosenFlow })
   })
 })

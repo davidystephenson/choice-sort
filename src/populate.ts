@@ -2,7 +2,7 @@ import { Flow, Item } from './flowTypes'
 import createOperation from './createOperation'
 import addOperation from './addOperation'
 
-export default function importItems (props: {
+export default function populate (props: {
   flow: Flow
   items: Item[]
 }): Flow {

@@ -1,7 +1,7 @@
 import combineOperations from '../../src/combineOperations'
 import { chooseOption, createFlow, importItems } from '../../src/index'
 import isOutputOperation from '../../src/isOutputOperation'
-import populate from '../../src/populate'
+import * as populate from '../../src/populate'
 import getVerifiedChoice from '../choice/getVerifiedChoice'
 
 describe('importItems', () => {
@@ -11,10 +11,12 @@ describe('importItems', () => {
     const item2 = { label: 'The Matrix Reloaded', uid: '2', seed: 30 }
     const item3 = { label: 'The Matrix Revolutions', uid: '3', seed: 40 }
     const items = [item1, item2, item3]
-    const populatedFlow = populate({ flow: flow1, items })
+    const populatedFlow = populate.default({ flow: flow1, items })
     const flow2 = createFlow({ uid: 'matrix' })
+    const populateSpy = jest.spyOn(populate, 'default')
     const importedFlow = importItems({ flow: flow2, items })
     expect(importedFlow).toEqual(populatedFlow)
+    expect(populateSpy).toHaveBeenCalledWith({ flow: flow2, items })
   })
 
   it('should ignore existing uids', () => {
@@ -43,7 +45,7 @@ describe('importItems', () => {
     const item3 = { label: 'The Matrix Revolutions', uid: '3', seed: 40 }
     const item4 = { label: 'The Matrix Resurrections', uid: '4', seed: 50 }
     const items = [item2, item3, item4]
-    const populatedFlow = populate({ flow: importedFlow1, items })
+    const populatedFlow = populate.default({ flow: importedFlow1, items })
     const combinedFlow = combineOperations({ flow: populatedFlow })
     expect(combinedFlow).not.toEqual(populatedFlow)
     const flow2 = createFlow({ uid: 'matrix' })
