@@ -4,16 +4,7 @@ import getImportInputsOperation from './item/getImportInputsOperation'
 import verifyItemInOperations from './item/verifyItemInOperations'
 
 describe('populate', () => {
-  it('should throw an error if the items are empty', () => {
-    expect(() => populate({ flow: createFlow({ uid: 'test' }), items: [] })).toThrow()
-  })
-
-  it('throws an error if the new items have duplicate UIDs', () => {
-    const item1 = { label: 'The Matrix', uid: '1', seed: 90 }
-    expect(() => populate({ flow: createFlow({ uid: 'test' }), items: [item1, item1] })).toThrow()
-  })
-
-  it('should throw an error if the items UIDs are not unique', () => {
+  it('should throw an error if the new items UIDs are not unique', () => {
     expect(() => {
       const flow = createFlow({ uid: 'test' })
       const item1 = { label: 'The Matrix', uid: '1', seed: 90 }
@@ -21,6 +12,24 @@ describe('populate', () => {
       const populatedFlow = populate({ flow, items: [item1, item2] })
       populate({ flow: populatedFlow, items: [item1] })
     }).toThrow()
+  })
+
+  it('should ignore existing uids', () => {
+    const flow1 = createFlow({ uid: 'matrix' })
+    const item1 = { label: 'The Matrix', uid: '1', seed: 90 }
+    const populatedFlow1 = populate({ flow: flow1, items: [item1] })
+    const item2 = { label: 'The Matrix Reloaded', uid: '1', seed: 30 }
+    const populatedFlow2 = populate({ flow: populatedFlow1, items: [item2] })
+    expect(populatedFlow2).toEqual(populatedFlow1)
+    const item3 = { label: 'The Matrix Resurrections', uid: '3', seed: 40 }
+    const populatedFlow3 = populate({ flow: populatedFlow2, items: [item2, item3] })
+    const items = Object.values(populatedFlow3.items)
+    const someMatrix = items.some(item => item.label === 'The Matrix')
+    expect(someMatrix).toBe(true)
+    const someMatrixReloaded = items.some(item => item.label === 'The Matrix Reloaded')
+    expect(someMatrixReloaded).toBe(false)
+    const someMatrixResurrections = items.some(item => item.label === 'The Matrix Resurrections')
+    expect(someMatrixResurrections).toBe(true)
   })
 
   it('should include the items indexed by uid', () => {

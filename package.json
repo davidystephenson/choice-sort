@@ -1,6 +1,6 @@
 {
   "name": "choice-sort",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Sort by choice",
   "keywords": [
     "choice",
@@ -19,7 +19,19 @@
   "license": "Unlicense",
   "author": "David Y. Stephenson",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "build": "tsup",
     "check": "npx tsc && npm run test && npm run deadcode && npm run lint",
