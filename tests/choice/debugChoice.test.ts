@@ -1,7 +1,6 @@
 import { createFlow, getChoice, importItems, Item } from '../../src'
 import debugChoice from '../../src/debugChoice'
 
-
 const debugSpy = jest.spyOn(console, 'debug').mockImplementation()
 afterEach(() => {
   debugSpy.mockClear()
