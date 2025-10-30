@@ -16,19 +16,19 @@ afterAll(() => {
 
 // Optional: Log memory usage for debugging
 if (process.env.NODE_ENV === 'test') {
-  const originalConsoleLog = console.log
+  const originalConsoleInfo = console.info
 
   beforeEach(() => {
     if (process.env.DEBUG_MEMORY) {
       const memUsage = process.memoryUsage()
-      originalConsoleLog(`Memory before test: ${Math.round(memUsage.heapUsed / 1024 / 1024)}MB`)
+      originalConsoleInfo(`Memory before test: ${Math.round(memUsage.heapUsed / 1024 / 1024)}MB`)
     }
   })
 
   afterEach(() => {
     if (process.env.DEBUG_MEMORY) {
       const memUsage = process.memoryUsage()
-      originalConsoleLog(`Memory after test: ${Math.round(memUsage.heapUsed / 1024 / 1024)}MB`)
+      originalConsoleInfo(`Memory after test: ${Math.round(memUsage.heapUsed / 1024 / 1024)}MB`)
     }
   })
 }

@@ -26,5 +26,5 @@ while (!complete) {
   complete = isFlowComplete({ flow })
 }
 const ranking = getRanking({ flow })
-console.log(ranking)
+console.info(ranking)
 ```

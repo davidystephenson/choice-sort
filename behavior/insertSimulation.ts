@@ -112,16 +112,16 @@ function getSteps (itemCount: number, debug: boolean = false): number {
     uid: String(scaled)
   }
   if (debug) {
-    console.log('item', item)
+    console.debug('item', item)
   }
   flow = importItems({ flow, items: [item] })
   if (debug) {
-    console.log('flow.operations', flow.operations)
+    console.debug('flow.operations', flow.operations)
   }
   let steps = 0
   choice = getChoice({ flow })
   if (debug) {
-    console.log('choice', choice)
+    console.debug('choice', choice)
   }
   while (choice != null) {
     flow = operate({ flow, option: decide(choice) })
